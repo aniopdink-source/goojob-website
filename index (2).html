@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Career Hub — 100 Best Jobs</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #070b14;
+    color: white;
+}
+
+/* HEADER */
+header {
+    background: linear-gradient(135deg, #111827, #172554);
+    padding: 30px 20px;
+    text-align: center;
+    border-bottom: 2px solid #38bdf8;
+}
+
+header h1 {
+    font-size: 38px;
+    color: #38bdf8;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #cbd5e1;
+    font-size: 17px;
+}
+
+/* SEARCH */
+.search-box {
+    max-width: 700px;
+    margin: 25px auto;
+    padding: 0 20px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 30px;
+    border: 2px solid #334155;
+    background: #0f172a;
+    color: white;
+    font-size: 17px;
+    outline: none;
+}
+
+.search-box input:focus {
+    border-color: #38bdf8;
+}
+
+/* CATEGORIES */
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 20px 25px;
+}
+
+.categories button {
+    padding: 10px 18px;
+    border: 1px solid #334155;
+    border-radius: 25px;
+    background: #111827;
+    color: white;
+    cursor: pointer;
+}
+
+.categories button:hover {
+    background: #38bdf8;
+    color: #020617;
+}
+
+/* JOB COUNT */
+.count {
+    text-align: center;
+    margin: 10px;
+    color: #94a3b8;
+}
+
+/* JOB GRID */
+.jobs {
+    max-width: 1250px;
+    margin: auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+/* JOB CARD */
+.job-card {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 18px;
+    padding: 22px;
+    cursor: pointer;
+    transition: 0.25s;
+    position: relative;
+    overflow: hidden;
+}
+
+.job-card:hover {
+    transform: translateY(-7px);
+    border-color: #38bdf8;
+    box-shadow: 0 10px 30px rgba(56,189,248,0.15);
+}
+
+.job-number {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.job-icon {
+    font-size: 40px;
+    margin: 12px 0;
+}
+
+.job-card h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.category {
+    display: inline-block;
+    background: #1e293b;
+    color: #38bdf8;
+    padding: 5px 9px;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.salary {
+    margin-top: 15px;
+    color: #4ade80;
+    font-weight: bold;
+}
+
+
+/* QR CODE */
+.qr-button {
+    display: block;
+    margin: 0 auto 25px;
+    padding: 12px 22px;
+    border: 0;
+    border-radius: 25px;
+    background: #38bdf8;
+    color: #020617;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(56,189,248,0.2);
+}
+.qr-button:hover {
+    transform: translateY(-2px);
+    background: #7dd3fc;
+}
+.qr-modal {
+    display: none;
+    position: fixed;
+    z-index: 200;
+    inset: 0;
+    background: rgba(0,0,0,0.82);
+    padding: 20px;
+}
+.qr-content {
+    max-width: 420px;
+    margin: 70px auto;
+    background: #0f172a;
+    border: 1px solid #38bdf8;
+    border-radius: 22px;
+    padding: 30px;
+    text-align: center;
+}
+.qr-content h2 {
+    color: #38bdf8;
+    margin-bottom: 10px;
+}
+.qr-content p {
+    color: #cbd5e1;
+    margin-bottom: 20px;
+}
+#qrcode {
+    background: white;
+    padding: 14px;
+    width: max-content;
+    margin: 0 auto 20px;
+    border-radius: 12px;
+}
+.qr-close {
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 20px;
+    background: #ef4444;
+    color: white;
+    cursor: pointer;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    background: rgba(0,0,0,0.82);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.modal-content {
+    max-width: 800px;
+    margin: 40px auto;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 22px;
+    padding: 30px;
+    position: relative;
+    animation: popup 0.25s ease;
+}
+
+@keyframes popup {
+    from {
+        transform: scale(.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #94a3b8;
+}
+
+.close:hover {
+    color: #ef4444;
+}
+
+.modal-icon {
+    font-size: 60px;
+    margin-bottom: 10px;
+}
+
+.modal h2 {
+    font-size: 32px;
+    color: #38bdf8;
+    margin-bottom: 10px;
+}
+
+.modal-category {
+    color: #94a3b8;
+    margin-bottom: 25px;
+}
+
+.info {
+    background: #111827;
+    border-radius: 14px;
+    padding: 18px;
+    margin: 12px 0;
+}
+
+.info h3 {
+    color: #38bdf8;
+    margin-bottom: 8px;
+}
+
+.info p,
+.info li {
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+.info ul {
+    padding-left: 20px;
+}
+
+.big-salary {
+    font-size: 25px;
+    color: #4ade80;
+    font-weight: bold;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
+}
+
+/* MOBILE */
+@media(max-width:600px) {
+    header h1 {
+        font-size: 28px;
+    }
+
+    .modal-content {
+        margin: 10px auto;
+        padding: 22px;
+    }
+
+    .modal h2 {
+        font-size: 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>💼 CAREER HUB</h1>
+    <p>Explore 100 careers and discover your future</p>
+</header>
+
+<button class="qr-button" onclick="showQRCode()">📱 QR CODE — OPEN CAREER HUB</button>
+
+
+<div class="search-box">
+    <input
+        type="text"
+        id="search"
+        placeholder="🔍 Search for a career..."
+        oninput="searchJobs()"
+    >
+</div>
+
+<div class="categories">
+    <button onclick="filterJobs('All')">All</button>
+    <button onclick="filterJobs('Technology')">💻 Technology</button>
+    <button onclick="filterJobs('Healthcare')">🩺 Healthcare</button>
+    <button onclick="filterJobs('Business')">💼 Business</button>
+    <button onclick="filterJobs('Engineering')">🏗️ Engineering</button>
+    <button onclick="filterJobs('Education')">🎓 Education</button>
+    <button onclick="filterJobs('Creative')">🎨 Creative</button>
+    <button onclick="filterJobs('Science')">🔬 Science</button>
+    <button onclick="filterJobs('Public Service')">🚓 Public Service</button>
+    <button onclick="filterJobs('Skilled Trades')">🔧 Skilled Trades</button>
+</div>
+
+<div class="count" id="count"></div>
+
+<div class="jobs" id="jobs"></div>
+
+
+<!-- QR CODE MODAL -->
+<div class="qr-modal" id="qrModal">
+    <div class="qr-content">
+        <span class="close" onclick="closeQRCode()">×</span>
+        <h2>📱 Career Hub QR Code</h2>
+        <p>Scan this QR code to open this Career Hub page.</p>
+        <div id="qrcode"></div>
+        <button class="qr-close" onclick="closeQRCode()">Close</button>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+
+        <span class="close" onclick="closeModal()">×</span>
+
+        <div class="modal-icon" id="modalIcon"></div>
+
+        <h2 id="modalTitle"></h2>
+
+        <div class="modal-category" id="modalCategory"></div>
+
+        <div class="info">
+            <h3>💰 Salary / Pay</h3>
+            <p class="big-salary" id="modalSalary"></p>
+        </div>
+
+        <div class="info">
+            <h3>📖 What does this job do?</h3>
+            <p id="modalDetails"></p>
+        </div>
+
+        <div class="info">
+            <h3>💼 Job Types</h3>
+            <ul id="modalTypes"></ul>
+        </div>
+
+        <div class="info">
+            <h3>🎓 Education</h3>
+            <p id="modalEducation"></p>
+        </div>
+
+        <div class="info">
+            <h3>🛠️ Important Skills</h3>
+            <ul id="modalSkills"></ul>
+        </div>
+
+        <div class="info">
+            <h3>🏢 Common Workplaces</h3>
+            <ul id="modalWorkplaces"></ul>
+        </div>
+
+        <div class="info">
+            <h3>📈 Career Outlook</h3>
+            <p id="modalOutlook"></p>
+        </div>
+
+    </div>
+</div>
+
+<footer>
+    © 2026 Career Hub — Explore Your Future 🚀
+</footer>
+
+
+<!-- QR Code library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+
+const jobs = [
+
+/* TECHNOLOGY */
+{
+name:"Software Developer",
+icon:"💻",
+category:"Technology",
+salary:"$135,980 / year",
+details:"Designs, develops, tests and maintains computer software and applications.",
+types:["Front-End Developer","Back-End Developer","Full-Stack Developer","Mobile Developer","Game Developer"],
+education:"Bachelor's degree in computer science or a related field is common.",
+skills:["Programming","Problem solving","Computer science","Teamwork"],
+workplaces:["Technology companies","Banks","Hospitals","Startups"],
+outlook:"Strong demand as businesses continue to use software and digital services."
+},
+
+{
+name:"Data Scientist",
+icon:"📊",
+category:"Technology",
+salary:"$120,230 / year",
+details:"Uses data, statistics and computer programming to find useful information and solve problems.",
+types:["Data Analyst","Machine Learning Specialist","Business Data Scientist","Research Data Scientist"],
+education:"Bachelor's degree in mathematics, statistics, computer science or a related field.",
+skills:["Statistics","Python","Data analysis","Machine learning"],
+workplaces:["Technology companies","Banks","Research organizations","Government"],
+outlook:"Strong growth as organizations increasingly rely on data."
+},
+
+{
+name:"Cybersecurity Analyst",
+icon:"🔐",
+category:"Technology",
+salary:"$124,910 / year",
+details:"Protects computer networks, systems and information from security threats.",
+types:["Security Analyst","SOC Analyst","Security Engineer","Threat Analyst"],
+education:"Bachelor's degree in cybersecurity, computer science or a related field.",
+skills:["Cybersecurity","Networking","Problem solving","Risk analysis"],
+workplaces:["Technology companies","Banks","Government","Hospitals"],
+outlook:"Growing demand because of increasing cybersecurity threats."
+},
+
+{
+name:"Web Developer",
+icon:"🌐",
+category:"Technology",
+salary:"$90,930 / year",
+details:"Creates and maintains websites and web applications.",
+types:["Front-End Developer","Back-End Developer","Full-Stack Developer"],
+education:"Degree or professional training in web development or computer science.",
+skills:["HTML","CSS","JavaScript","Problem solving"],
+workplaces:["Technology companies","Agencies","Freelance","Startups"],
+outlook:"Continued demand for websites and online services."
+},
+
+{
+name:"Database Administrator",
+icon:"🗄️",
+category:"Technology",
+salary:"$104,620 / year",
+details:"Manages databases and makes sure information is stored securely and efficiently.",
+types:["Database Administrator","Database Engineer","Database Architect"],
+education:"Bachelor's degree in computer science or information technology.",
+skills:["SQL","Database management","Security","Problem solving"],
+workplaces:["Banks","Technology companies","Hospitals","Government"],
+outlook:"Organizations continue to need professionals who manage large databases."
+},
+
+{
+name:"Network Administrator",
+icon:"🖧",
+category:"Technology",
+salary:"$96,800 / year",
+details:"Maintains computer networks and keeps connected systems operating properly.",
+types:["Network Administrator","Network Engineer","Systems Administrator"],
+education:"Information technology or computer science training is common.",
+skills:["Networking","Troubleshooting","Security","Communication"],
+workplaces:["Companies","Schools","Hospitals","Government"],
+outlook:"Demand remains connected to the growth of computer networks."
+},
+
+{
+name:"AI / Machine Learning Engineer",
+icon:"🤖",
+category:"Technology",
+salary:"Varies by role",
+details:"Builds computer systems that learn from data and perform tasks using artificial intelligence.",
+types:["Machine Learning Engineer","AI Engineer","Deep Learning Engineer","NLP Engineer"],
+education:"Computer science, mathematics or engineering education is common.",
+skills:["Python","Machine learning","Mathematics","Algorithms"],
+workplaces:["AI companies","Technology companies","Research labs","Startups"],
+outlook:"Rapidly developing field with growing applications across industries."
+},
+
+{
+name:"Computer Systems Analyst",
+icon:"🖥️",
+category:"Technology",
+salary:"$103,790 / year",
+details:"Studies an organization's computer systems and recommends improvements.",
+types:["Systems Analyst","Business Systems Analyst","Applications Analyst"],
+education:"Bachelor's degree in computer science or information systems is common.",
+skills:["Analysis","Technology","Communication","Problem solving"],
+workplaces:["Banks","Companies","Hospitals","Government"],
+outlook:"Organizations continue upgrading their technology systems."
+},
+
+{
+name:"Game Developer",
+icon:"🎮",
+category:"Technology",
+salary:"Varies by role",
+details:"Creates video games by combining programming, design, graphics and gameplay systems.",
+types:["Game Programmer","Game Designer","Gameplay Engineer","Technical Artist"],
+education:"Computer science, game development or related training.",
+skills:["Programming","Game engines","3D design","Creativity"],
+workplaces:["Game studios","Technology companies","Independent studios"],
+outlook:"Opportunities are connected to the continuing video-game industry."
+},
+
+{
+name:"Mobile App Developer",
+icon:"📱",
+category:"Technology",
+salary:"Varies by role",
+details:"Builds applications for smartphones and tablets.",
+types:["Android Developer","iOS Developer","Cross-Platform Developer"],
+education:"Computer science or software development training.",
+skills:["Programming","UI design","Mobile development","Testing"],
+workplaces:["Technology companies","Startups","App studios","Freelance"],
+outlook:"Mobile applications remain an important part of digital services."
+},
+
+/* HEALTHCARE */
+{
+name:"Physician / Doctor",
+icon:"👨‍⚕️",
+category:"Healthcare",
+salary:"$239,200+ / year",
+details:"Diagnoses illnesses, treats patients and helps people maintain their health.",
+types:["General Practitioner","Surgeon","Pediatrician","Cardiologist"],
+education:"Medical degree followed by residency and required licensing.",
+skills:["Medical knowledge","Communication","Decision making","Patient care"],
+workplaces:["Hospitals","Clinics","Medical centers","Private practices"],
+outlook:"Healthcare services remain essential."
+},
+
+{
+name:"Registered Nurse",
+icon:"🩺",
+category:"Healthcare",
+salary:"$97,550 / year",
+details:"Provides patient care, monitors health conditions and works with doctors and healthcare teams.",
+types:["Hospital Nurse","Emergency Nurse","Pediatric Nurse","Surgical Nurse"],
+education:"Nursing degree or diploma plus professional licensing.",
+skills:["Patient care","Communication","Medical knowledge","Teamwork"],
+workplaces:["Hospitals","Clinics","Nursing homes","Healthcare centers"],
+outlook:"Strong demand for nursing professionals."
+},
+
+{
+name:"Nurse Practitioner",
+icon:"💉",
+category:"Healthcare",
+salary:"$132,300 / year",
+details:"Provides advanced patient care, diagnoses conditions and may prescribe treatments depending on local laws.",
+types:["Family Nurse Practitioner","Pediatric Nurse Practitioner","Psychiatric Nurse Practitioner"],
+education:"Nursing education followed by advanced graduate-level training.",
+skills:["Clinical care","Diagnosis","Communication","Leadership"],
+workplaces:["Hospitals","Clinics","Medical centers"],
+outlook:"Strong projected growth in healthcare."
+},
+
+{
+name:"Dentist",
+icon:"🦷",
+category:"Healthcare",
+salary:"$179,210 / year",
+details:"Diagnoses and treats diseases and problems involving teeth, gums and the mouth.",
+types:["General Dentist","Orthodontist","Oral Surgeon","Pediatric Dentist"],
+education:"Dental degree and professional licensing.",
+skills:["Dental science","Precision","Communication","Patient care"],
+workplaces:["Dental clinics","Hospitals","Private practices"],
+outlook:"Continued need for dental care."
+},
+
+{
+name:"Pharmacist",
+icon:"💊",
+category:"Healthcare",
+salary:"$137,480 / year",
+details:"Prepares and provides medications while helping patients understand how to use them safely.",
+types:["Community Pharmacist","Hospital Pharmacist","Clinical Pharmacist"],
+education:"Doctor of Pharmacy degree and licensing.",
+skills:["Pharmacology","Accuracy","Communication","Patient care"],
+workplaces:["Pharmacies","Hospitals","Clinics","Research organizations"],
+outlook:"Healthcare systems continue to require medication experts."
+},
+
+{
+name:"Physical Therapist",
+icon:"🏃",
+category:"Healthcare",
+salary:"$101,020 / year",
+details:"Helps patients improve movement and recover from injuries or physical conditions.",
+types:["Sports Therapist","Orthopedic Therapist","Pediatric Therapist"],
+education:"Professional physical therapy degree and licensing.",
+skills:["Anatomy","Exercise","Patient care","Communication"],
+workplaces:["Hospitals","Clinics","Sports centers","Rehabilitation centers"],
+outlook:"Demand is supported by rehabilitation and aging populations."
+},
+
+{
+name:"Medical Assistant",
+icon:"🏥",
+category:"Healthcare",
+salary:"$45,690 / year",
+details:"Supports healthcare professionals with clinical and administrative tasks.",
+types:["Clinical Assistant","Administrative Medical Assistant"],
+education:"Certificate or professional training is common.",
+skills:["Organization","Patient care","Communication","Medical terminology"],
+workplaces:["Clinics","Hospitals","Doctor offices"],
+outlook:"Healthcare facilities continue to employ medical assistants."
+},
+
+{
+name:"Psychologist",
+icon:"🧠",
+category:"Healthcare",
+salary:"Varies by specialization",
+details:"Studies human behavior and provides psychological assessment, research or treatment depending on specialization.",
+types:["Clinical Psychologist","School Psychologist","Research Psychologist"],
+education:"Advanced psychology education is commonly required.",
+skills:["Communication","Research","Analysis","Empathy"],
+workplaces:["Clinics","Schools","Hospitals","Research organizations"],
+outlook:"Demand varies by specialization and setting."
+},
+
+{
+name:"Veterinarian",
+icon:"🐾",
+category:"Healthcare",
+salary:"Varies by role",
+details:"Diagnoses and treats diseases and injuries in animals.",
+types:["Pet Veterinarian","Large Animal Veterinarian","Veterinary Surgeon"],
+education:"Veterinary medicine degree and licensing.",
+skills:["Animal science","Diagnosis","Surgery","Communication"],
+workplaces:["Animal hospitals","Clinics","Farms","Research facilities"],
+outlook:"Continued demand for animal healthcare."
+},
+
+{
+name:"Medical & Health Services Manager",
+icon:"📋",
+category:"Healthcare",
+salary:"$123,860 / year",
+details:"Plans and coordinates healthcare services and manages medical organizations.",
+types:["Hospital Manager","Clinic Manager","Health Information Manager"],
+education:"Bachelor's degree is common; healthcare management education can be useful.",
+skills:["Leadership","Management","Organization","Healthcare knowledge"],
+workplaces:["Hospitals","Clinics","Healthcare organizations"],
+outlook:"Healthcare organizations need managers to coordinate services."
+},
+
+/* BUSINESS */
+{
+name:"Accountant",
+icon:"🧾",
+category:"Business",
+salary:"$83,680 / year",
+details:"Prepares financial records, analyzes accounts and helps organizations manage finances.",
+types:["Public Accountant","Management Accountant","Tax Accountant","Auditor"],
+education:"Accounting or finance degree is common.",
+skills:["Mathematics","Accounting","Analysis","Attention to detail"],
+workplaces:["Accounting firms","Companies","Banks","Government"],
+outlook:"Organizations continue to require financial reporting and accounting."
+},
+
+{
+name:"Financial Manager",
+icon:"💰",
+category:"Business",
+salary:"$166,570 / year",
+details:"Plans and directs the financial activities of an organization.",
+types:["Corporate Finance Manager","Treasury Manager","Risk Manager"],
+education:"Bachelor's degree in finance, accounting or business is common.",
+skills:["Finance","Leadership","Analysis","Decision making"],
+workplaces:["Banks","Corporations","Investment firms"],
+outlook:"Financial management remains important across industries."
+},
+
+{
+name:"Financial Analyst",
+icon:"📈",
+category:"Business",
+salary:"$101,910 / year",
+details:"Evaluates financial information and helps organizations make investment and business decisions.",
+types:["Investment Analyst","Corporate Financial Analyst","Risk Analyst"],
+education:"Finance, economics or business degree is common.",
+skills:["Financial analysis","Excel","Research","Mathematics"],
+workplaces:["Banks","Investment firms","Corporations"],
+outlook:"Demand varies with financial markets and business activity."
+},
+
+{
+name:"Marketing Manager",
+icon:"📣",
+category:"Business",
+salary:"$161,030 / year",
+details:"Plans and manages marketing strategies to promote products, services and organizations.",
+types:["Digital Marketing Manager","Brand Manager","Product Marketing Manager"],
+education:"Marketing, business or communications degree is common.",
+skills:["Marketing","Leadership","Communication","Analytics"],
+workplaces:["Companies","Agencies","Technology firms","Retail"],
+outlook:"Businesses continue investing in marketing and digital communication."
+},
+
+{
+name:"Human Resources Manager",
+icon:"👥",
+category:"Business",
+salary:"$140,030 / year",
+details:"Plans and coordinates an organization's employee-related activities.",
+types:["HR Manager","Recruitment Manager","Employee Relations Manager"],
+education:"Human resources, business or related degree is common.",
+skills:["Communication","Leadership","Organization","Employment law"],
+workplaces:["Companies","Government","Nonprofits","Organizations"],
+outlook:"Organizations continue to need HR professionals."
+},
+
+{
+name:"Project Manager",
+icon:"📅",
+category:"Business",
+salary:"Varies by industry",
+details:"Plans, organizes and coordinates projects from beginning to completion.",
+types:["IT Project Manager","Construction Project Manager","Marketing Project Manager"],
+education:"Business, management or industry-specific education is common.",
+skills:["Leadership","Planning","Communication","Organization"],
+workplaces:["Technology","Construction","Business","Government"],
+outlook:"Project management is used across many industries."
+},
+
+{
+name:"Business Analyst",
+icon:"📊",
+category:"Business",
+salary:"Varies by industry",
+details:"Studies business processes and helps organizations improve efficiency and performance.",
+types:["IT Business Analyst","Process Analyst","Business Systems Analyst"],
+education:"Business, information systems or related education.",
+skills:["Analysis","Communication","Problem solving","Data"],
+workplaces:["Companies","Consulting firms","Technology companies"],
+outlook:"Organizations use analysts to improve processes and technology."
+},
+
+{
+name:"Operations Manager",
+icon:"⚙️",
+category:"Business",
+salary:"Varies by industry",
+details:"Coordinates the daily operations of an organization.",
+types:["Operations Director","Operations Manager","Production Manager"],
+education:"Business or management education is common.",
+skills:["Leadership","Organization","Planning","Problem solving"],
+workplaces:["Factories","Companies","Retail","Logistics"],
+outlook:"Operations management is needed wherever organizations provide products or services."
+},
+
+{
+name:"Sales Manager",
+icon:"🤝",
+category:"Business",
+salary:"$138,060 / year",
+details:"Plans sales strategies and manages sales teams.",
+types:["Regional Sales Manager","Account Manager","Sales Director"],
+education:"Business, marketing or related experience is common.",
+skills:["Communication","Leadership","Negotiation","Sales"],
+workplaces:["Companies","Retail","Technology","Manufacturing"],
+outlook:"Sales remains important for businesses across industries."
+},
+
+{
+name:"Economist",
+icon:"📚",
+category:"Business",
+salary:"$115,730 / year",
+details:"Studies economic activity, markets and data to understand economic conditions.",
+types:["Government Economist","Business Economist","Research Economist"],
+education:"Advanced economics education is common.",
+skills:["Economics","Statistics","Research","Mathematics"],
+workplaces:["Government","Banks","Universities","Research organizations"],
+outlook:"Demand varies by industry and research needs."
+},
+
+/* ENGINEERING */
+{
+name:"Civil Engineer",
+icon:"🏗️",
+category:"Engineering",
+salary:"Varies by experience",
+details:"Designs and oversees infrastructure such as roads, bridges, buildings and water systems.",
+types:["Structural Engineer","Transportation Engineer","Water Resources Engineer"],
+education:"Bachelor's degree in civil engineering is common.",
+skills:["Mathematics","Engineering","Design","Problem solving"],
+workplaces:["Engineering firms","Construction companies","Government"],
+outlook:"Infrastructure construction and maintenance support demand."
+},
+
+{
+name:"Mechanical Engineer",
+icon:"⚙️",
+category:"Engineering",
+salary:"Varies by experience",
+details:"Designs, develops and tests mechanical devices and systems.",
+types:["Automotive Engineer","Manufacturing Engineer","Robotics Engineer"],
+education:"Bachelor's degree in mechanical engineering.",
+skills:["CAD","Physics","Mathematics","Design"],
+workplaces:["Manufacturing","Automotive","Aerospace","Energy"],
+outlook:"Mechanical engineering is used across many industries."
+},
+
+{
+name:"Electrical Engineer",
+icon:"⚡",
+category:"Engineering",
+salary:"Varies by experience",
+details:"Designs and develops electrical systems and equipment.",
+types:["Power Engineer","Electronics Engineer","Control Engineer"],
+education:"Bachelor's degree in electrical engineering.",
+skills:["Electronics","Mathematics","Circuit design","Problem solving"],
+workplaces:["Energy companies","Technology","Manufacturing","Engineering firms"],
+outlook:"Electrical systems remain essential to modern technology."
+},
+
+{
+name:"Chemical Engineer",
+icon:"🧪",
+category:"Engineering",
+salary:"Varies by experience",
+details:"Uses chemistry, physics and engineering to develop industrial processes and products.",
+types:["Process Engineer","Chemical Process Engineer","Materials Engineer"],
+education:"Bachelor's degree in chemical engineering.",
+skills:["Chemistry","Mathematics","Process design","Analysis"],
+workplaces:["Chemical companies","Energy","Manufacturing","Pharmaceuticals"],
+outlook:"Opportunities exist across chemical and manufacturing industries."
+},
+
+{
+name:"Aerospace Engineer",
+icon:"🚀",
+category:"Engineering",
+salary:"Varies by experience",
+details:"Designs and develops aircraft, spacecraft and related systems.",
+types:["Aircraft Engineer","Spacecraft Engineer","Propulsion Engineer"],
+education:"Bachelor's degree in aerospace or mechanical engineering.",
+skills:["Physics","Aerodynamics","Mathematics","CAD"],
+workplaces:["Aircraft companies","Space companies","Government","Defense"],
+outlook:"Opportunities depend on aerospace, aviation and space programs."
+},
+
+{
+name:"Architect",
+icon:"🏛️",
+category:"Engineering",
+salary:"Varies by experience",
+details:"Designs buildings and develops plans for construction projects.",
+types:["Building Architect","Landscape Architect","Urban Designer"],
+education:"Architecture degree and professional requirements.",
+skills:["Design","CAD","Creativity","Mathematics"],
+workplaces:["Architecture firms","Construction","Government","Freelance"],
+outlook:"Architecture demand is connected to construction and development."
+},
+
+{
+name:"Construction Manager",
+icon:"👷",
+category:"Engineering",
+salary:"Varies by experience",
+details:"Plans and supervises construction projects.",
+types:["Building Manager","Site Manager","Project Manager"],
+education:"Construction management or related education is common.",
+skills:["Leadership","Planning","Construction","Budgeting"],
+workplaces:["Construction companies","Engineering firms","Government"],
+outlook:"Construction projects continue to require project leadership."
+},
+
+{
+name:"Environmental Engineer",
+icon:"🌱",
+category:"Engineering",
+salary:"Varies by experience",
+details:"Develops engineering solutions to environmental problems.",
+types:["Water Engineer","Waste Management Engineer","Environmental Consultant"],
+education:"Environmental or civil engineering degree.",
+skills:["Engineering","Environmental science","Problem solving","Analysis"],
+workplaces:["Engineering firms","Government","Consulting","Energy"],
+outlook:"Environmental regulations and sustainability create opportunities."
+},
+
+{
+name:"Robotics Engineer",
+icon:"🤖",
+category:"Engineering",
+salary:"Varies by experience",
+details:"Designs and develops robots and automated systems.",
+types:["Robot Engineer","Automation Engineer","Control Systems Engineer"],
+education:"Mechanical, electrical or computer engineering education.",
+skills:["Robotics","Programming","Electronics","Mathematics"],
+workplaces:["Manufacturing","Technology","Research labs","Automotive"],
+outlook:"Automation continues to expand across industries."
+},
+
+{
+name:"Biomedical Engineer",
+icon:"🦾",
+category:"Engineering",
+salary:"Varies by experience",
+details:"Develops technology and equipment used in healthcare and medicine.",
+types:["Medical Device Engineer","Biomaterials Engineer","Clinical Engineer"],
+education:"Biomedical, mechanical or electrical engineering.",
+skills:["Engineering","Biology","Design","Research"],
+workplaces:["Medical device companies","Hospitals","Research labs"],
+outlook:"Healthcare technology continues to develop."
+},
+
+/* EDUCATION */
+{
+name:"Teacher",
+icon:"👩‍🏫",
+category:"Education",
+salary:"Varies by location",
+details:"Educates students and helps them develop academic and practical skills.",
+types:["Elementary Teacher","Middle School Teacher","High School Teacher"],
+education:"Teaching degree and required certification.",
+skills:["Communication","Teaching","Organization","Patience"],
+workplaces:["Schools","Education centers","Online education"],
+outlook:"Teachers remain essential to education systems."
+},
+
+{
+name:"School Principal",
+icon:"🏫",
+category:"Education",
+salary:"Varies by location",
+details:"Leads a school and coordinates staff, students, programs and operations.",
+types:["Elementary Principal","High School Principal","School Director"],
+education:"Teaching experience plus educational leadership preparation is common.",
+skills:["Leadership","Communication","Organization","Management"],
+workplaces:["Schools","Education systems"],
+outlook:"Schools require experienced educational leaders."
+},
+
+{
+name:"College Professor",
+icon:"🎓",
+category:"Education",
+salary:"Varies by institution",
+details:"Teaches college or university students and may conduct research.",
+types:["Professor","Lecturer","Research Professor"],
+education:"Advanced degree is commonly required.",
+skills:["Teaching","Research","Communication","Subject expertise"],
+workplaces:["Universities","Colleges","Research institutions"],
+outlook:"Opportunities vary by academic field and institution."
+},
+
+{
+name:"School Counselor",
+icon:"🧑‍🎓",
+category:"Education",
+salary:"$61,710 / year",
+details:"Helps students with academic planning, career development and personal concerns.",
+types:["Academic Counselor","Career Counselor","College Counselor"],
+education:"Counseling or education degree and relevant certification.",
+skills:["Communication","Counseling","Planning","Listening"],
+workplaces:["Schools","Colleges","Education centers"],
+outlook:"Schools continue to need student support services."
+},
+
+{
+name:"Librarian",
+icon:"📚",
+category:"Education",
+salary:"Varies by location",
+details:"Helps people find information and manages library resources.",
+types:["School Librarian","Academic Librarian","Public Librarian"],
+education:"Library science education is common.",
+skills:["Research","Organization","Information technology","Communication"],
+workplaces:["Libraries","Schools","Universities","Government"],
+outlook:"Libraries increasingly combine traditional and digital information services."
+},
+
+{
+name:"Education Administrator",
+icon:"📋",
+category:"Education",
+salary:"Varies by location",
+details:"Manages educational programs, institutions and administrative activities.",
+types:["School Administrator","Education Coordinator","Academic Administrator"],
+education:"Education or education-management training is common.",
+skills:["Leadership","Planning","Communication","Management"],
+workplaces:["Schools","Universities","Government"],
+outlook:"Education organizations require administrative leadership."
+},
+
+{
+name:"Special Education Teacher",
+icon:"❤️",
+category:"Education",
+salary:"Varies by location",
+details:"Provides specialized instruction and support for students with disabilities.",
+types:["Special Education Teacher","Learning Support Teacher"],
+education:"Teaching degree plus special education preparation.",
+skills:["Teaching","Communication","Adaptability","Patience"],
+workplaces:["Schools","Special education centers"],
+outlook:"Specialized education services continue to be needed."
+},
+
+{
+name:"Training Specialist",
+icon:"🎯",
+category:"Education",
+salary:"Varies by industry",
+details:"Develops and delivers training programs for employees or organizations.",
+types:["Corporate Trainer","Technical Trainer","Learning Specialist"],
+education:"Education, business or subject-specific training is common.",
+skills:["Teaching","Communication","Presentation","Organization"],
+workplaces:["Companies","Government","Training organizations"],
+outlook:"Organizations use training professionals to develop employee skills."
+},
+
+{
+name:"Instructional Designer",
+icon:"🖥️",
+category:"Education",
+salary:"Varies by role",
+details:"Creates learning materials, courses and educational experiences.",
+types:["E-Learning Designer","Curriculum Designer","Learning Experience Designer"],
+education:"Education, instructional design or related field.",
+skills:["Course design","Technology","Writing","Teaching"],
+workplaces:["Universities","Companies","Online education"],
+outlook:"Digital learning continues to create opportunities."
+},
+
+{
+name:"Academic Advisor",
+icon:"🎓",
+category:"Education",
+salary:"Varies by institution",
+details:"Helps students plan courses, programs and academic goals.",
+types:["College Advisor","University Advisor","Student Success Advisor"],
+education:"Education, counseling or related degree is common.",
+skills:["Communication","Planning","Organization","Student support"],
+workplaces:["Colleges","Universities","Schools"],
+outlook:"Educational institutions continue to provide student support services."
+},
+
+/* CREATIVE */
+{
+name:"Graphic Designer",
+icon:"🎨",
+category:"Creative",
+salary:"Varies by experience",
+details:"Creates visual designs for brands, publications, websites and other media.",
+types:["Brand Designer","UI Designer","Print Designer","Social Media Designer"],
+education:"Graphic design education or strong portfolio experience.",
+skills:["Design","Typography","Photoshop","Creativity"],
+workplaces:["Design agencies","Companies","Freelance","Media"],
+outlook:"Design work continues across digital and traditional media."
+},
+
+{
+name:"Animator",
+icon:"🎬",
+category:"Creative",
+salary:"Varies by experience",
+details:"Creates moving images and visual effects for films, games, advertising and other media.",
+types:["2D Animator","3D Animator","Character Animator","Motion Designer"],
+education:"Animation, art or digital media training.",
+skills:["Animation","3D software","Drawing","Creativity"],
+workplaces:["Film studios","Game studios","Advertising","Freelance"],
+outlook:"Animation is used across entertainment, advertising and digital media."
+},
+
+{
+name:"Video Editor",
+icon:"🎞️",
+category:"Creative",
+salary:"Varies by experience",
+details:"Combines video footage, audio, graphics and effects into finished productions.",
+types:["Film Editor","Social Media Editor","YouTube Editor","Commercial Editor"],
+education:"Film, media or practical editing experience.",
+skills:["Video editing","Storytelling","Premiere Pro","Creativity"],
+workplaces:["Film companies","Media companies","Creators","Freelance"],
+outlook:"Demand is connected to online video and entertainment production."
+},
+
+{
+name:"Photographer",
+icon:"📷",
+category:"Creative",
+salary:"Varies",
+details:"Creates photographs for commercial, editorial, personal and artistic purposes.",
+types:["Portrait Photographer","Sports Photographer","Fashion Photographer","Product Photographer"],
+education:"Photography training or portfolio experience.",
+skills:["Photography","Lighting","Editing","Creativity"],
+workplaces:["Studios","Media","Events","Freelance"],
+outlook:"Opportunities vary widely by specialization and market."
+},
+
+{
+name:"Film Director",
+icon:"🎥",
+category:"Creative",
+salary:"Varies widely",
+details:"Leads the creative production of films and video projects.",
+types:["Film Director","TV Director","Commercial Director","Music Video Director"],
+education:"Film education or professional experience is common.",
+skills:["Leadership","Storytelling","Camera knowledge","Creativity"],
+workplaces:["Film studios","TV companies","Production companies"],
+outlook:"Work can be project-based and highly competitive."
+},
+
+{
+name:"Actor",
+icon:"🎭",
+category:"Creative",
+salary:"Varies widely",
+details:"Performs characters in films, television, theater, advertisements and other productions.",
+types:["Film Actor","TV Actor","Theater Actor","Voice Actor"],
+education:"Acting training and audition experience are common.",
+skills:["Acting","Communication","Memorization","Performance"],
+workplaces:["Film studios","Theaters","TV productions","Freelance"],
+outlook:"Employment can vary significantly by production and project."
+},
+
+{
+name:"Music Producer",
+icon:"🎧",
+category:"Creative",
+salary:"Varies widely",
+details:"Creates, records and develops music productions.",
+types:["Record Producer","Beat Producer","Audio Producer","Executive Producer"],
+education:"Music production training or practical experience.",
+skills:["Audio production","Music theory","Creativity","DAWs"],
+workplaces:["Recording studios","Music companies","Freelance"],
+outlook:"Digital music production provides many independent opportunities."
+},
+
+{
+name:"Journalist",
+icon:"📰",
+category:"Creative",
+salary:"Varies by organization",
+details:"Researches, investigates and reports news and information.",
+types:["News Reporter","Investigative Journalist","Sports Journalist","Digital Journalist"],
+education:"Journalism, communications or related education is common.",
+skills:["Writing","Research","Interviewing","Communication"],
+workplaces:["Newspapers","TV","Radio","Digital media"],
+outlook:"Journalism continues shifting toward digital platforms."
+},
+
+{
+name:"Social Media Manager",
+icon:"📱",
+category:"Creative",
+salary:"Varies by company",
+details:"Plans and manages social media content and online community engagement.",
+types:["Social Media Manager","Community Manager","Social Media Strategist"],
+education:"Marketing, communications or practical experience.",
+skills:["Social media","Writing","Marketing","Analytics"],
+workplaces:["Companies","Agencies","Creators","Startups"],
+outlook:"Businesses and organizations continue using social platforms."
+},
+
+{
+name:"Content Creator",
+icon:"🎥",
+category:"Creative",
+salary:"Varies widely",
+details:"Creates videos, photos, articles or other content for online audiences.",
+types:["YouTuber","Streamer","TikTok Creator","Blogger"],
+education:"No single required degree; skills and audience-building are important.",
+skills:["Video","Writing","Creativity","Communication"],
+workplaces:["Online","Studios","Freelance"],
+outlook:"Opportunities depend strongly on audience, platform and business model."
+},
+
+/* SCIENCE */
+{
+name:"Biologist",
+icon:"🧬",
+category:"Science",
+salary:"Varies by specialization",
+details:"Studies living organisms and biological processes.",
+types:["Molecular Biologist","Marine Biologist","Ecologist","Microbiologist"],
+education:"Biology degree; advanced research roles often require graduate education.",
+skills:["Biology","Research","Laboratory skills","Analysis"],
+workplaces:["Universities","Research labs","Government","Healthcare"],
+outlook:"Biological research supports healthcare, agriculture and environmental science."
+},
+
+{
+name:"Chemist",
+icon:"⚗️",
+category:"Science",
+salary:"Varies by specialization",
+details:"Studies substances and chemical processes.",
+types:["Analytical Chemist","Organic Chemist","Industrial Chemist"],
+education:"Chemistry degree; advanced research roles may require graduate education.",
+skills:["Chemistry","Laboratory work","Analysis","Research"],
+workplaces:["Laboratories","Pharmaceuticals","Manufacturing","Universities"],
+outlook:"Chemists work across research, manufacturing and healthcare."
+},
+
+{
+name:"Physicist",
+icon:"🌌",
+category:"Science",
+salary:"Varies by specialization",
+details:"Studies matter, energy, forces and the fundamental behavior of the universe.",
+types:["Theoretical Physicist","Experimental Physicist","Astrophysicist"],
+education:"Physics degree; research positions commonly require advanced degrees.",
+skills:["Physics","Mathematics","Research","Programming"],
+workplaces:["Universities","Research labs","Government","Technology"],
+outlook:"Opportunities are concentrated in research, education and technology."
+},
+
+{
+name:"Geologist",
+icon:"🌍",
+category:"Science",
+salary:"Varies by specialization",
+details:"Studies Earth materials, processes and geological history.",
+types:["Petroleum Geologist","Environmental Geologist","Mining Geologist"],
+education:"Geology or Earth science degree.",
+skills:["Geology","Field research","Mapping","Analysis"],
+workplaces:["Mining","Energy","Government","Environmental companies"],
+outlook:"Geologists contribute to natural resources and environmental work."
+},
+
+{
+name:"Statistician",
+icon:"📊",
+category:"Science",
+salary:"Varies by role",
+details:"Collects and analyzes data to answer questions and support decisions.",
+types:["Data Statistician","Biostatistician","Government Statistician"],
+education:"Statistics, mathematics or data science degree.",
+skills:["Statistics","Mathematics","Programming","Data analysis"],
+workplaces:["Government","Healthcare","Research","Technology"],
+outlook:"Data-driven decision making supports continued demand."
+},
+
+{
+name:"Mathematician",
+icon:"➗",
+category:"Science",
+salary:"Varies by role",
+details:"Develops mathematical theories and applies mathematics to solve problems.",
+types:["Applied Mathematician","Pure Mathematician","Research Mathematician"],
+education:"Advanced mathematics education is common for research careers.",
+skills:["Mathematics","Logic","Research","Problem solving"],
+workplaces:["Universities","Research organizations","Government","Technology"],
+outlook:"Mathematics is used in research, technology and data-related fields."
+},
+
+{
+name:"Environmental Scientist",
+icon:"🌱",
+category:"Science",
+salary:"Varies by role",
+details:"Studies environmental conditions and develops solutions to environmental problems.",
+types:["Environmental Analyst","Conservation Scientist","Environmental Consultant"],
+education:"Environmental science, biology or related degree.",
+skills:["Research","Environmental science","Data analysis","Fieldwork"],
+workplaces:["Government","Consulting","Research","Nonprofits"],
+outlook:"Environmental monitoring and sustainability create opportunities."
+},
+
+{
+name:"Astronomer",
+icon:"🔭",
+category:"Science",
+salary:"Varies by institution",
+details:"Studies stars, planets, galaxies and other objects in space.",
+types:["Observational Astronomer","Theoretical Astronomer","Planetary Scientist"],
+education:"Advanced education in astronomy or physics is common.",
+skills:["Physics","Mathematics","Research","Programming"],
+workplaces:["Universities","Observatories","Research organizations"],
+outlook:"Most positions are concentrated in research and academic institutions."
+},
+
+{
+name:"Research Scientist",
+icon:"🔬",
+category:"Science",
+salary:"Varies by field",
+details:"Conducts scientific research to develop new knowledge, products or technologies.",
+types:["Laboratory Scientist","Research Associate","R&D Scientist"],
+education:"Education requirements depend on scientific field.",
+skills:["Research","Analysis","Experimentation","Scientific writing"],
+workplaces:["Universities","Laboratories","Technology","Pharmaceuticals"],
+outlook:"Research opportunities vary by scientific field and funding."
+},
+
+{
+name:"Agricultural Scientist",
+icon:"🌾",
+category:"Science",
+salary:"Varies by specialization",
+details:"Studies crops, animals and agricultural systems to improve food production.",
+types:["Crop Scientist","Soil Scientist","Animal Scientist"],
+education:"Agricultural science, biology or related degree.",
+skills:["Agriculture","Research","Biology","Data analysis"],
+workplaces:["Research centers","Farms","Government","Agribusiness"],
+outlook:"Food production and agricultural technology support ongoing research."
+},
+
+/* PUBLIC SERVICE */
+{
+name:"Police Officer",
+icon:"👮",
+category:"Public Service",
+salary:"Varies by location",
+details:"Protects people, enforces laws and responds to emergencies.",
+types:["Patrol Officer","Traffic Officer","Community Officer"],
+education:"Requirements vary by jurisdiction and department.",
+skills:["Communication","Observation","Decision making","Teamwork"],
+workplaces:["Police departments","Government"],
+outlook:"Public safety agencies continue to require law-enforcement personnel."
+},
+
+{
+name:"Detective",
+icon:"🕵️",
+category:"Public Service",
+salary:"Varies by location",
+details:"Investigates crimes and gathers evidence to help solve cases.",
+types:["Homicide Detective","Financial Crimes Detective","Cybercrime Detective"],
+education:"Requirements vary by police department and jurisdiction.",
+skills:["Investigation","Observation","Interviewing","Analysis"],
+workplaces:["Police departments","Government agencies"],
+outlook:"Demand depends on local public-safety needs."
+},
+
+{
+name:"Firefighter",
+icon:"🚒",
+category:"Public Service",
+salary:"Varies by location",
+details:"Responds to fires, accidents, rescues and other emergencies.",
+types:["Firefighter","Fire Inspector","Fire Prevention Specialist"],
+education:"Requirements vary; specialized firefighter training is common.",
+skills:["Emergency response","Fitness","Teamwork","Problem solving"],
+workplaces:["Fire departments","Emergency services"],
+outlook:"Fire and emergency services continue to require trained personnel."
+},
+
+{
+name:"Lawyer",
+icon:"⚖️",
+category:"Public Service",
+salary:"$151,160 / year",
+details:"Provides legal advice and represents clients in legal matters.",
+types:["Criminal Lawyer","Corporate Lawyer","Family Lawyer","Immigration Lawyer"],
+education:"Law degree and professional licensing are generally required.",
+skills:["Legal research","Writing","Negotiation","Communication"],
+workplaces:["Law firms","Companies","Government","Private practice"],
+outlook:"Legal services remain necessary across many sectors."
+},
+
+{
+name:"Paralegal",
+icon:"📑",
+category:"Public Service",
+salary:"$61,010 / year",
+details:"Supports lawyers by conducting research, organizing documents and preparing legal materials.",
+types:["Legal Assistant","Litigation Paralegal","Corporate Paralegal"],
+education:"Paralegal education or professional training is common.",
+skills:["Research","Writing","Organization","Legal knowledge"],
+workplaces:["Law firms","Corporate legal departments","Government"],
+outlook:"Paralegals support legal services across many organizations."
+},
+
+{
+name:"Government Administrator",
+icon:"🏛️",
+category:"Public Service",
+salary:"Varies by government",
+details:"Helps manage public programs, services and government operations.",
+types:["Program Administrator","Public Affairs Officer","Government Analyst"],
+education:"Public administration, business or related education is common.",
+skills:["Organization","Communication","Policy analysis","Management"],
+workplaces:["Government agencies","Municipalities","Public institutions"],
+outlook:"Public organizations require administrative and program professionals."
+},
+
+{
+name:"Emergency Management Specialist",
+icon:"🚨",
+category:"Public Service",
+salary:"Varies by location",
+details:"Plans and coordinates responses to disasters and emergencies.",
+types:["Emergency Planner","Disaster Response Specialist","Emergency Coordinator"],
+education:"Emergency management, public administration or related training.",
+skills:["Planning","Communication","Crisis management","Coordination"],
+workplaces:["Government","Emergency agencies","Hospitals"],
+outlook:"Emergency preparedness remains important for communities and organizations."
+},
+
+{
+name:"Social Worker",
+icon:"🤝",
+category:"Public Service",
+salary:"Varies by specialization",
+details:"Helps individuals and families address social, financial and personal challenges.",
+types:["Child Welfare Social Worker","Medical Social Worker","School Social Worker"],
+education:"Social work degree and required licensing vary by role.",
+skills:["Communication","Case management","Counseling","Problem solving"],
+workplaces:["Hospitals","Schools","Government","Nonprofits"],
+outlook:"Social services remain important across communities."
+},
+
+{
+name:"Urban Planner",
+icon:"🏙️",
+category:"Public Service",
+salary:"Varies by location",
+details:"Develops plans for how communities use land, transportation and public spaces.",
+types:["City Planner","Transportation Planner","Environmental Planner"],
+education:"Urban planning or related degree is common.",
+skills:["Planning","Geography","Research","Communication"],
+workplaces:["City governments","Planning agencies","Consulting firms"],
+outlook:"Population growth and infrastructure planning create ongoing needs."
+},
+
+{
+name:"Public Health Specialist",
+icon:"🧬",
+category:"Public Service",
+salary:"Varies by role",
+details:"Works to improve health outcomes for communities and populations.",
+types:["Public Health Educator","Epidemiology Assistant","Health Program Specialist"],
+education:"Public health or related education.",
+skills:["Health science","Research","Communication","Data"],
+workplaces:["Government","Hospitals","Nonprofits","Health organizations"],
+outlook:"Public health programs continue to require trained specialists."
+},
+
+/* SKILLED TRADES */
+{
+name:"Electrician",
+icon:"⚡",
+category:"Skilled Trades",
+salary:"$63,190 / year",
+details:"Installs, maintains and repairs electrical systems.",
+types:["Residential Electrician","Commercial Electrician","Industrial Electrician"],
+education:"Apprenticeship and professional licensing requirements vary by location.",
+skills:["Electrical systems","Safety","Troubleshooting","Technical skills"],
+workplaces:["Construction","Homes","Factories","Businesses"],
+outlook:"Electrical installation and maintenance remain essential."
+},
+
+{
+name:"Plumber",
+icon:"🔧",
+category:"Skilled Trades",
+salary:"Varies by location",
+details:"Installs and repairs water, drainage and related plumbing systems.",
+types:["Residential Plumber","Commercial Plumber","Industrial Plumber"],
+education:"Apprenticeship and licensing requirements vary.",
+skills:["Plumbing","Problem solving","Safety","Technical skills"],
+workplaces:["Construction","Homes","Businesses","Factories"],
+outlook:"Buildings continually require plumbing installation and maintenance."
+},
+
+{
+name:"Carpenter",
+icon:"🪚",
+category:"Skilled Trades",
+salary:"Varies by location",
+details:"Builds and repairs structures and products made from wood and other materials.",
+types:["Construction Carpenter","Finish Carpenter","Cabinetmaker"],
+education:"Apprenticeship or practical training is common.",
+skills:["Woodworking","Measurement","Construction","Precision"],
+workplaces:["Construction sites","Workshops","Home renovation"],
+outlook:"Construction and renovation support continued opportunities."
+},
+
+{
+name:"Welder",
+icon:"🔥",
+category:"Skilled Trades",
+salary:"Varies by location",
+details:"Joins metal parts using heat, pressure and specialized equipment.",
+types:["MIG Welder","TIG Welder","Pipe Welder","Industrial Welder"],
+education:"Technical training or apprenticeship is common.",
+skills:["Welding","Safety","Metalworking","Precision"],
+workplaces:["Factories","Construction","Automotive","Manufacturing"],
+outlook:"Welding is used in manufacturing, construction and repair."
+},
+
+{
+name:"Automotive Mechanic",
+icon:"🚗",
+category:"Skilled Trades",
+salary:"Varies by location",
+details:"Inspects, maintains and repairs cars and other vehicles.",
+types:["Auto Technician","Engine Technician","Brake Technician","Diagnostic Technician"],
+education:"Automotive training and hands-on experience are common.",
+skills:["Mechanics","Diagnostics","Electrical systems","Problem solving"],
+workplaces:["Auto repair shops","Dealerships","Fleet companies"],
+outlook:"Vehicles require regular maintenance and repair."
+},
+
+{
+name:"Aircraft Mechanic",
+icon:"✈️",
+category:"Skilled Trades",
+salary:"Varies by location",
+details:"Inspects and repairs aircraft to keep them safe and operational.",
+types:["Airframe Mechanic","Powerplant Mechanic","Avionics Technician"],
+education:"Specialized aviation maintenance training and certification.",
+skills:["Aircraft systems","Safety","Mechanical skills","Precision"],
+workplaces:["Airlines","Airports","Aircraft maintenance companies"],
+outlook:"Aviation requires trained maintenance professionals."
+},
+
+{
+name:"Truck Driver",
+icon:"🚛",
+category:"Skilled Trades",
+salary:"$58,640 / year",
+details:"Transports goods between locations using commercial trucks.",
+types:["Long-Haul Driver","Local Driver","Delivery Driver"],
+education:"Commercial driver's license and required training.",
+skills:["Driving","Safety","Navigation","Time management"],
+workplaces:["Trucking companies","Logistics companies","Retail"],
+outlook:"Transportation remains important to supply chains."
+},
+
+{
+name:"Airline Pilot",
+icon:"✈️",
+category:"Skilled Trades",
+salary:"$219,140 / year",
+details:"Operates aircraft and transports passengers or cargo.",
+types:["Commercial Pilot","Airline First Officer","Airline Captain"],
+education:"Flight training, licenses and required flight experience.",
+skills:["Aviation","Communication","Decision making","Safety"],
+workplaces:["Airlines","Cargo companies","Charter companies"],
+outlook:"Demand is connected to aviation activity and pilot workforce needs."
+},
+
+{
+name:"Solar Installer",
+icon:"☀️",
+category:"Skilled Trades",
+salary:"$53,140 / year",
+details:"Installs and maintains solar photovoltaic systems.",
+types:["Solar Installer","Solar Technician","PV Installer"],
+education:"Technical training or on-the-job training is common.",
+skills:["Electrical systems","Construction","Safety","Problem solving"],
+workplaces:["Solar companies","Construction","Energy companies"],
+outlook:"Solar installation has been one of the faster-growing occupations."
+},
+
+{
+name:"Wind Turbine Technician",
+icon:"🌬️",
+category:"Skilled Trades",
+salary:"$64,120 / year",
+details:"Installs, maintains and repairs wind turbines.",
+types:["Wind Technician","Wind Energy Technician","Turbine Maintenance Technician"],
+education:"Technical training is commonly required.",
+skills:["Mechanical skills","Electrical systems","Safety","Climbing"],
+workplaces:["Wind farms","Energy companies"],
+outlook:"Wind-energy employment has been among the faster-growing occupations."
+}
+
+];
+
+
+
+/* QR CODE */
+function showQRCode() {
+    const modal = document.getElementById("qrModal");
+    const qrBox = document.getElementById("qrcode");
+
+    qrBox.innerHTML = "";
+
+    /*
+      When the app is hosted online, location.href becomes its real
+      public link. The QR code will then open the app directly.
+    */
+    new QRCode(qrBox, {
+        text: window.location.href,
+        width: 220,
+        height: 220,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+    modal.style.display = "block";
+}
+
+function closeQRCode() {
+    document.getElementById("qrModal").style.display = "none";
+}
+
+/* DISPLAY JOBS */
+
+let currentCategory = "All";
+
+function displayJobs(list) {
+
+    const container = document.getElementById("jobs");
+
+    container.innerHTML = "";
+
+    document.getElementById("count").innerText =
+        `${list.length} careers available`;
+
+    list.forEach((job, index) => {
+
+        const card = document.createElement("div");
+
+        card.className = "job-card";
+
+        card.onclick = () => openModal(job);
+
+        card.innerHTML = `
+            <div class="job-number">CAREER #${index + 1}</div>
+
+            <div class="job-icon">${job.icon}</div>
+
+            <h2>${job.name}</h2>
+
+            <span class="category">
+                ${job.category}
+            </span>
+
+            <div class="salary">
+                💰 ${job.salary}
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+
+/* SEARCH */
+
+function searchJobs() {
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const filtered = jobs.filter(job => {
+
+        const matchesSearch =
+            job.name.toLowerCase().includes(search) ||
+            job.category.toLowerCase().includes(search) ||
+            job.details.toLowerCase().includes(search);
+
+        const matchesCategory =
+            currentCategory === "All" ||
+            job.category === currentCategory;
+
+        return matchesSearch && matchesCategory;
+    });
+
+    displayJobs(filtered);
+}
+
+
+/* CATEGORY */
+
+function filterJobs(category) {
+
+    currentCategory = category;
+
+    document.getElementById("search").value = "";
+
+    const filtered =
+        category === "All"
+        ? jobs
+        : jobs.filter(job => job.category === category);
+
+    displayJobs(filtered);
+}
+
+
+/* OPEN MODAL */
+
+function openModal(job) {
+
+    document.getElementById("modal").style.display = "block";
+
+    document.getElementById("modalIcon").innerText =
+        job.icon;
+
+    document.getElementById("modalTitle").innerText =
+        job.name;
+
+    document.getElementById("modalCategory").innerText =
+        job.category;
+
+    document.getElementById("modalSalary").innerText =
+        job.salary;
+
+    document.getElementById("modalDetails").innerText =
+        job.details;
+
+    document.getElementById("modalEducation").innerText =
+        job.education;
+
+    document.getElementById("modalOutlook").innerText =
+        job.outlook;
+
+    document.getElementById("modalTypes").innerHTML =
+        job.types
+        .map(type => `<li>${type}</li>`)
+        .join("");
+
+    document.getElementById("modalSkills").innerHTML =
+        job.skills
+        .map(skill => `<li>${skill}</li>`)
+        .join("");
+
+    document.getElementById("modalWorkplaces").innerHTML =
+        job.workplaces
+        .map(place => `<li>${place}</li>`)
+        .join("");
+}
+
+
+/* CLOSE MODAL */
+
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+
+/* CLICK OUTSIDE */
+
+window.onclick = function(event) {
+
+    const modal =
+        document.getElementById("modal");
+
+    const qrModal =
+        document.getElementById("qrModal");
+
+    if(event.target === modal) {
+        closeModal();
+    }
+
+    if(event.target === qrModal) {
+        closeQRCode();
+    }
+}
+
+
+/* ESC KEY */
+
+document.addEventListener("keydown", function(event) {
+
+    if(event.key === "Escape") {
+        closeModal();
+        closeQRCode();
+    }
+
+});
+
+
+/* START */
+
+displayJobs(jobs);
+
+</script>
+
+</body>
+</html>
